@@ -1,0 +1,18 @@
+{
+  "name": "pampi-gps-cli",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^13.1.0",
+    "minifyify": "^7.3.3",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.14.1",
+    "watchify": "^3.7.0"
+  }
+}

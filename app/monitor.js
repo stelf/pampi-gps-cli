@@ -1,17 +1,35 @@
+#!/usr/bin/env node
+
 const os = require('os');
 const gpsd = require('node-gpsd');
 const request = require('request');
+const ps = require('ps-node');
+const process = require('process');
+const spawn = require('child_process').spawn;
+
+function checkssh() {
+    return new Promise( (res, rej) => {
+        ps.lookup({
+            command: 'autossh',
+            user: 'root',
+            psargs: 'ax',
+        }, function(err, resultList ) {
+            if (err) {
+                return rej(new Error(err));
+            }
+            if(resultList.length) {
+                return res(parseInt(resultList[0].pid));
+            }
+
+            res(false);
+        });
+    });
+}
 
 function eth1ready() {
 	let iflist = os.networkInterfaces();
-	
-	if (iflist.eth1 && iflist.eth1[0].address) {
-		console.log("eth1 connected");	
-		return true;
-	} else { 
-		console.log("eth1 not connected");	
-		return false;
-	}
+
+	return (iflist.eth1 && iflist.eth1[0].address);
 }
 
 var listener = new gpsd.Listener({
@@ -28,7 +46,7 @@ var listener = new gpsd.Listener({
 });
 
 listener.connect(function() {
-    console.log('Connected');
+    console.info('Connected to GPS daemon. Expectign data...');
 });
 
 let curr = [];
@@ -85,5 +103,36 @@ function sendres() {
 	curr.length = 0;
 }
 
+let crun = false;
+
+function checknet() {
+    if (crun) return;
+
+    crun = true;
+	if (eth1ready()) {
+        checkssh().then( res => {
+            if (!res) {
+                console.log('respawn autossh process');
+                var sp = spawn('/home/pi/autossh.sh', [], {detached: true, stdio: 'ignore'});
+                sp.unref();
+            } else {
+                // console.log('eth1 is running, so is ssh');
+            }
+        });
+	} else {
+        checkssh().then( res => {
+            if (res) {
+                console.log('eth1 is down kill autossh PID' + res);
+                process.kill(res, 'SIGKILL');
+            } else {
+                // console.log('eth1 is down, so is ssh');
+            }
+        });
+    }
+    crun = false;
+}
+
+
 setInterval(sendres, 10 * 1000);
+setInterval(checknet, 3000);
 

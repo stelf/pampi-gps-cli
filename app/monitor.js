@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const IMEI = 'BUS0001';
 
+const config = require('./config')
 const os = require('os');
 const gpsd = require('node-gpsd');
 const request = require('request');
@@ -48,7 +48,7 @@ var listener = new gpsd.Listener({
 });
 
 listener.connect(function() {
-    console.info('Connected to GPS daemon. Expectign data...');
+    console.info(`Connected to GPS daemon. Using IMEI: ${config.IMEI}.`);
 });
 
 let curr = [];
@@ -60,7 +60,7 @@ listener.on('TPV', td => {
 		td.radius = Math.sqrt((td.epx * td.epx) + (td.epy * td.epy));
 		console.log(`${td.lon} / ${td.lat} / r ${td.radius} / s ${td.speed} `);
 
-		td.imei = IMEI;
+		td.imei = config.IMEI;
 		td.t = (new Date(td.time)).getTime();
 
 		var g = { imei: td.imei,
@@ -93,7 +93,7 @@ function sendres() {
 	let pdata = JSON.stringify(res);
 
 	request({
-        uri: 'http://dev2-bg.plan-vision.com:3000/recv',
+        uri: config.SERVER,
         method: 'POST',
         json: res
 	}, function(error, resp, body) {
@@ -114,7 +114,8 @@ function checknet() {
         checkssh().then( res => {
             if (!res) {
                 console.log('! respawn autossh process');
-                var sp = spawn('/home/pi/autossh.sh', [], {detached: true, stdio: 'ignore'});
+                var sp = spawn(config.AUTOSSH, [], {detached: true, stdio: 'ignore'});
+                console.info(`Using SERVER: ${config.SERVER}.`);
                 sp.unref();
             } else {
                 // console.log('eth1 is running, so is ssh');

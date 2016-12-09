@@ -23,6 +23,7 @@ fi
 apt update
 apt upgrade
 apt install xautomation chromium-browser
+apt install libgl1-mesa-dri raspi-update
 
 mkdir -p 
 cp autostart /home/pi/

@@ -1,0 +1,37 @@
+#!/bin/sh   
+
+### BEGIN INIT INFO
+# Provides:          pampinit
+# Required-Start:    
+# Required-Stop:     
+# Default-Start:     S
+# Default-Stop:
+# Short-Description: Pampi init
+### END INIT INFO
+
+export PATH=$PATH:/opt/node/bin
+export NODE_PATH=$NODE_PATH:/opt/node/lib/node_modules
+export HOME=/root
+
+
+case "$1" in
+	start)
+		cd /home/pi/pampi-gps-cli
+		sudo -u pi npm start > /home/pi/log/pampi-gps.log &
+
+		cd /home/pi/wsh
+		sudo -u pi nodemon js/wsh.js client B1  > /home/pi/log/wsh.log &
+		;;
+	stop)
+		pkill -f monitor\.js
+		pkill -f wsh\.js
+		;;
+	*)
+
+		echo "Usage: /etc/init.d/pampinit {start|stop}"
+		exit 1
+		;;
+esac
+exit 0
+
+exit 0

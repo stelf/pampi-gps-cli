@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const IMEI = 'BUS0001';
+
 const os = require('os');
 const gpsd = require('node-gpsd');
 const request = require('request');
@@ -37,8 +39,8 @@ var listener = new gpsd.Listener({
     hostname: 'localhost',
     logger:  {
         info: function(e) {
-		console.log(e);
-	},
+            console.log(e);
+        },
         warn: console.warn,
         error: console.error
     },
@@ -58,12 +60,12 @@ listener.on('TPV', td => {
 		td.radius = Math.sqrt((td.epx * td.epx) + (td.epy * td.epy));
 		console.log(`${td.lon} / ${td.lat} / r ${td.radius} / s ${td.speed} `);
 
-		td.imei = 'BUS0001';
+		td.imei = IMEI;
 		td.t = (new Date(td.time)).getTime();
 
-		var g = { imei: td.imei, 
+		var g = { imei: td.imei,
 			t: td.t,
-			lon: td.lon, lat: td.lat, 
+			lon: td.lon, lat: td.lat,
 			speed: td.speed, radius: td.radius };
 
 		curr.push(g);
@@ -86,15 +88,14 @@ function sendres() {
 
 	res.speed *= 3.6;
 
-	console.log(">>>> sending over this thing >>>> ");
-	console.log(res);
+    console.log(`* TX: ${res}`);
 
 	let pdata = JSON.stringify(res);
 
 	request({
-              uri: 'http://dev2-bg.plan-vision.com:3000/recv',
-	      method: 'POST',
-              json: res
+        uri: 'http://dev2-bg.plan-vision.com:3000/recv',
+        method: 'POST',
+        json: res
 	}, function(error, resp, body) {
 		console.log(error);
 		console.log(body);
@@ -107,12 +108,12 @@ let crun = false;
 
 function checknet() {
     if (crun) return;
-
     crun = true;
+
 	if (eth1ready()) {
         checkssh().then( res => {
             if (!res) {
-                console.log('respawn autossh process');
+                console.log('! respawn autossh process');
                 var sp = spawn('/home/pi/autossh.sh', [], {detached: true, stdio: 'ignore'});
                 sp.unref();
             } else {
@@ -122,7 +123,7 @@ function checknet() {
 	} else {
         checkssh().then( res => {
             if (res) {
-                console.log('eth1 is down kill autossh PID' + res);
+                console.log('! eth1 is down kill autossh PID' + res);
                 process.kill(res, 'SIGKILL');
             } else {
                 // console.log('eth1 is down, so is ssh');
@@ -131,7 +132,6 @@ function checknet() {
     }
     crun = false;
 }
-
 
 setInterval(sendres, 10 * 1000);
 setInterval(checknet, 3000);

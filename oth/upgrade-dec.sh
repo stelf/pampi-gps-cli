@@ -29,7 +29,8 @@ echo * apps
 apt update
 apt upgrade
 apt install xautomation chromium-browser
-apt install libgl1-mesa-dri raspi-update
+apt install raspi-update lightdm 
+apt install libgl1-mesa-dri xcompmgr lxde-core
 
 echo * autostart
 
@@ -41,3 +42,5 @@ echo # gps
 cp gpsd.socket /lib/systemd/system
 cp gpsd
 
+raspi-config
+raspi-update

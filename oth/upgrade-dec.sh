@@ -1,5 +1,7 @@
 echo * security
 
+sudo dpkg-reconfigure console-setup
+
 if ! test -e ~/.ssh/id_ecdsa.pub;
 then
   echo === GENERATE ECDSA key ===
@@ -26,13 +28,10 @@ echo * apps
 
 apt update
 apt upgrade
-apt install xautomation
+apt install xautomation chromium-browser
 
 echo * autostart
 
 mkdir -p /home/pi/.config/lxsession/LXDE/
 cp autostart /home/pi/.config/lxsession/LXDE/
 
-
-#
-# tell GPSD to not start IPV6

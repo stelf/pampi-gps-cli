@@ -32,6 +32,11 @@ apt install xautomation chromium-browser
 
 echo * autostart
 
+echo ## kiosk
 mkdir -p /home/pi/.config/lxsession/LXDE/
 cp autostart /home/pi/.config/lxsession/LXDE/
+
+echo # gps
+cp gpsd.socket /lib/systemd/system
+cp gpsd
 

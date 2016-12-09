@@ -1,6 +1,7 @@
+cp autostart /home/pi/.config/lxsession/LXDE/
 
 if ! grep -q temp_limit /tmp/xxx; 
-then 
+then
 cat >> /tmp/razgele <<EOF 
  gpu_mem=320
  arm_freq=1000

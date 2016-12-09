@@ -1,0 +1,9 @@
+# @lxpanel --profile LXDE
+# @pcmanfm --desktop --profile LXDE
+# @xscreensaver -no-splash
+@xset s off
+@xset -dpms
+@xset s noblank
+# @/home/pi/fullscreen.sh
+# @midori -e Fullscreen http://dev2-bg.plan-vision.com:3000
+@chromium-browser --kiosk http://dev2-bg.plan-vision.com:3000

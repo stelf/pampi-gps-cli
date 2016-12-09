@@ -1,3 +1,5 @@
+sudo dpkg-reconfigure console-setup
+
 if ! test -e ~/.ssh/id_ecdsa.pub; 
 then
   echo === GENERATE ECDSA key ===
@@ -20,11 +22,15 @@ fi
 
 apt update
 apt upgrade
-apt install xautomation
+apt install xautomation chromium-browser
 
 mkdir -p 
 cp autostart /home/pi/
 
-# 
-# tell GPSD to not start IPV6
-# 
+echo <<EOD
+TODO manual
+
+* change /home/pi/autossh to connect to 2299
+* tell GPSD to not start IPV6
+
+EOD

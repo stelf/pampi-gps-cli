@@ -14,4 +14,4 @@ EOF
 fi
 
 raspi-config
-raspi-update
+rpi-update

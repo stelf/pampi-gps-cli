@@ -11,10 +11,10 @@ fi
 
 echo * tuning
 
-if ! grep -q temp_limit /tmp/xxx;
+if ! grep -q temp_limit /boot/config.txt;
 then
   echo === IMPROVE SPEED ===
-cat >> /boot/config.txt <<EOF
+sudo cat >> /boot/config.txt <<EOF
  gpu_mem=320
  arm_freq=1000
  sdram_freq=500
@@ -26,9 +26,9 @@ fi
 
 echo * apps
 
-apt update
-apt upgrade
-apt install xautomation chromium-browser
+sudo apt update
+sudo apt install raspi-update
+sudo apt install xautomation chromium-browser
 
 echo * autostart
 
@@ -37,6 +37,6 @@ mkdir -p /home/pi/.config/lxsession/LXDE/
 cp autostart /home/pi/.config/lxsession/LXDE/
 
 echo # gps
-cp gpsd.socket /lib/systemd/system
-cp gpsd
+sudo cp gpsd.socket /lib/systemd/system
+sudo cp gpsd /etc/defaults
 

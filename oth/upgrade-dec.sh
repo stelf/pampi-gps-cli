@@ -1,6 +1,9 @@
-echo * security
+
+echo = font =
 
 sudo dpkg-reconfigure console-setup
+
+echo = security =
 
 if ! test -e ~/.ssh/id_ecdsa.pub;
 then
@@ -9,12 +12,12 @@ then
   ssh-copy-id -i ~/.ssh/id_ecdsa.pub pi-chan@dev2-bg.plan-vision.com -p2299
 fi
 
-echo * tuning
+echo = tuning =
 
 if ! grep -q temp_limit /boot/config.txt;
 then
   echo === IMPROVE SPEED ===
-sudo cat >> /boot/config.txt <<EOF
+sudo -s cat >> /boot/config.txt <<EOF
  gpu_mem=320
  arm_freq=1000
  sdram_freq=500
@@ -24,19 +27,20 @@ sudo cat >> /boot/config.txt <<EOF
 EOF
 fi
 
-echo * apps
+echo = apps =
 
-sudo apt update
-sudo apt install raspi-update
-sudo apt install xautomation chromium-browser
+apt update
+apt install xautomation chromium-browser
+apt install rpi-update lightdm
+apt install libgl1-mesa-dri xcompmgr lxde-core
 
-echo * autostart
-
-echo ## kiosk
+echo = kiosk =
 mkdir -p /home/pi/.config/lxsession/LXDE/
 cp autostart /home/pi/.config/lxsession/LXDE/
 
-echo # gps
-sudo cp gpsd.socket /lib/systemd/system
-sudo cp gpsd /etc/defaults
+echo = gps =
+sudo -s cp gpsd.socket /lib/systemd/system
+sudo -s cp gpsd /etc/defaults
 
+sudo -s raspi-config
+sudo -s rpi-update

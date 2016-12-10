@@ -1,8 +1,10 @@
 #!/bin/bash
 
-echo * security
+echo = font =
 
 sudo dpkg-reconfigure console-setup
+
+echo = security =
 
 if ! test -e ~/.ssh/id_ecdsa.pub;
 then
@@ -11,23 +13,20 @@ then
   ssh-copy-id -i ~/.ssh/id_ecdsa.pub pi-chan@dev2-bg.plan-vision.com -p2299
 fi
 
-echo * apps
+echo = apps =
 
 apt update
-apt upgrade
 apt install xautomation chromium-browser
-apt install raspi-update lightdm ack-grep
+apt install rpi-update lightdm ack-grep
 apt install libgl1-mesa-dri xcompmgr lxde-core
 
-echo * autostart
-
-echo ## kiosk
+echo = kiosk =
 mkdir -p /home/pi/.config/lxsession/LXDE/
 cp autostart /home/pi/.config/lxsession/LXDE/
 
-echo # gps
-cp gpsd.socket /lib/systemd/system
-cp gpsd
+echo = gps =
+sudo cp gpsd.socket /lib/systemd/system/
+sudo cp gpsd /etc/default/
 
 echo * tuning
 

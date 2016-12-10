@@ -39,8 +39,8 @@ mkdir -p /home/pi/.config/lxsession/LXDE/
 cp autostart /home/pi/.config/lxsession/LXDE/
 
 echo = gps =
-sudo -s cp gpsd.socket /lib/systemd/system
-sudo -s cp gpsd /etc/defaults
+sudo cp gpsd.socket /lib/systemd/system/
+sudo cp gpsd /etc/default/
 
 sudo -s raspi-config
 sudo -s rpi-update

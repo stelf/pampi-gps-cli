@@ -15,10 +15,10 @@ fi
 
 echo = apps =
 
-apt update
-apt install xautomation chromium-browser
-apt install rpi-update lightdm ack-grep
-apt install libgl1-mesa-dri xcompmgr lxde-core
+sudo apt update -y
+sudo apt install xautomation chromium-browser -y
+sudo apt install rpi-update lightdm ack-grep -y
+sudo apt install libgl1-mesa-dri xcompmgr lxde-core -y
 
 echo = kiosk =
 mkdir -p /home/pi/.config/lxsession/LXDE/

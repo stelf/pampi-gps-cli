@@ -6,4 +6,9 @@
 @xset s noblank
 # @/home/pi/fullscreen.sh
 # @midori -e Fullscreen http://dev2-bg.plan-vision.com:3000
-@chromium-browser --kiosk http://dev2-bg.plan-vision.com:3000
+@chromium-browser --kiosk --no-first-run \
+	--disable-java --disable-plugins \
+    --disk-cache-size=$((1024 * 1024)) --disk-cache-dir=/tmp/chromium/ \
+ 	--user-data-dir=/tmp/chromium/ \
+	--force-device-scale-factor=1 \
+    file:///home/stelf/pampi-gps-cli/public/reloader.html

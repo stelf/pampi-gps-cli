@@ -9,7 +9,22 @@ echo == touch environment ==
 
 if ! grep -q en_GB /etc/environment;
 then
-    echo LC_ALL="en_GB.utf8" >>re /etc/environment
+    echo 'LC_ALL="en_GB.utf8"' >> /etc/environment
 fi
+
+if ! grep -q PS1 ~/.profile;
+then
+    echo "export PS1='\h:\w\$ '" >> ~/.profile
+fi
+
+echo == apps ==
+
+apt install vim-nox
+
+echo == hostname ==
+
+vim /etc/hostname
+
+echo == add proper pampi startup ==
 
 cp pampinit /etc/init.d/pampinit

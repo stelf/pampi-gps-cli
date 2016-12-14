@@ -28,4 +28,4 @@ vim /etc/hostname
 
 echo == add proper pampi startup ==
 
-cp paminit /etc/pampinit
+cp pampinit /etc/init.d/pampinit

@@ -12,4 +12,4 @@ then
     echo LC_ALL="en_GB.utf8" >>re /etc/environment
 fi
 
-cp paminit /etc/pampinit
+cp pampinit /etc/init.d/pampinit

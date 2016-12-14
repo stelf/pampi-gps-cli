@@ -56,6 +56,7 @@ let lt;
 
 listener.watch({ class: 'WATCH', json: true, nmea: false });
 listener.on('TPV', td => {
+    console.log(JSON.stringify(td));
 	if (td.speed >= 0 && td.lon && td.lat && td.time) {
 		td.radius = Math.sqrt((td.epx * td.epx) + (td.epy * td.epy));
 		console.log(`${td.lon} / ${td.lat} / r ${td.radius} / s ${td.speed} `);
@@ -88,7 +89,7 @@ function sendres() {
 
 	res.speed *= 3.6;
 
-    console.log(`* TX: ${res}`);
+    console.log(`* TX: ${JSON.stringify(res)}`);
 
 	let pdata = JSON.stringify(res);
 

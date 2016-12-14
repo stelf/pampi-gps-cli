@@ -27,4 +27,7 @@ vim /etc/hostname
 
 echo == add proper pampi startup ==
 
+cp autostart /home/pi/.config/lxsession/LXDE/
 cp pampinit /etc/init.d/pampinit
+
+

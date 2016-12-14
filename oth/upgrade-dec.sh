@@ -31,3 +31,5 @@ sudo cp gpsd /etc/default/
 echo * tuning
 
 sudo ./config-boot.sh
+sudo ./after-update.sh
+

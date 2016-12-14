@@ -12,4 +12,20 @@ then
     echo LC_ALL="en_GB.utf8" >>re /etc/environment
 fi
 
+
+if ! grep -q PS1 ~/.profile;
+then
+    echo export PS1='\h:\w\$ ' >> ~/.profile
+fi
+
+echo == apps ==
+
+apt install vim-nox
+
+echo == hostname ==
+
+vim /etc/hostname
+
+echo == add proper pampi startup ==
+
 cp paminit /etc/pampinit

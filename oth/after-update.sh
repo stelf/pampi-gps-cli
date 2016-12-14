@@ -15,7 +15,7 @@ fi
 
 if ! grep -q PS1 ~/.profile;
 then
-    echo export PS1='\h:\w\$ ' >> ~/.profile
+    echo "export PS1='\h:\w\$ '" >> ~/.profile
 fi
 
 echo == apps ==

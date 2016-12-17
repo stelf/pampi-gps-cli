@@ -1,9 +1,9 @@
-#!/bin/sh   
+#!/bin/sh
 
 ### BEGIN INIT INFO
 # Provides:          pampinit
-# Required-Start:    
-# Required-Stop:     
+# Required-Start:
+# Required-Stop:
 # Default-Start:     S
 # Default-Stop:
 # Short-Description: Pampi init

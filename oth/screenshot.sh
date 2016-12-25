@@ -7,7 +7,7 @@ sudo apt install imagemagick
 if ! sudo grep -q DISPLAY /var/spool/cron/crontabs/pi;
 then
     echo "= Amend screen capture"
-    sudo sh -c 'echo "*/5 * * * * DISPLAY=:0 import -window root /home/pi/current-screen.jpg -q 5" >> /var/spool/cron/crontabs/pi'
+    sudo sh -c 'echo "*/5 * * * * /home/pi/pampi-gps-cli/app/get-screen.sh" >> /var/spool/cron/crontabs/pi'
 fi
 
 if ! grep -q LC_ALL /etc/default/locale;

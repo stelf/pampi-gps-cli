@@ -5,6 +5,8 @@ echo == setup recurring screenshot ==
 sudo apt install imagemagick
 sudo sh -c 'echo "*/5 * * * * DISPLAY=:0 import -window root /home/pi/current-screen.jpg -q 5" >> /var/spool/cron/crontabs/pi'
 
+sudo sh -c 'echo LC_ALL="en_GB.utf8" >> /etc/default/locale'
+
 echo == update wsh ==
 
 cd /home/pi/wsh

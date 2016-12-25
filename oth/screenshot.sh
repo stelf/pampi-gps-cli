@@ -1,9 +1,14 @@
 #!/bin/bash
 
-echo == setup recurring screenshot ==
+echo == setup crons  ==
 
 sudo apt install imagemagick
-sudo sh -c 'echo "*/5 * * * * DISPLAY=:0 import -window root /home/pi/current-screen.jpg -q 5" >> /var/spool/cron/crontabs/pi'
+
+if ! sudo grep -q DISPLAY /var/spool/cron/crontabs/pi;
+then
+    echo "= Amend screen capture"
+    sudo sh -c 'echo "*/5 * * * * DISPLAY=:0 import -window root /home/pi/current-screen.jpg -q 5" >> /var/spool/cron/crontabs/pi'
+fi
 
 if ! grep -q LC_ALL /etc/default/locale;
 then
@@ -20,6 +25,8 @@ then
     sudo sh -c 'echo "0 18 * * * /sbin/reboot" >> /var/spool/cron/crontabs/root'
 fi
 
+sudo service cron reload
+
 echo == update wsh ==
 
 cd /home/pi/wsh
@@ -28,4 +35,3 @@ git remote add bot ssh://visionr@dev2-bg.plan-vision.com:2299/wsh/
 for i in $(pgrep -f monitor); do kill $i; echo stopped $i; done 
 git pull bot HEAD
 rm /home/pi/wsh/js/external*.js
-    

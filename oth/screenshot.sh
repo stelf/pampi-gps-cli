@@ -30,8 +30,9 @@ sudo service cron reload
 echo == update wsh ==
 
 cd /home/pi/wsh
+sudo chown -R pi:pi node_modules
 npm install log4node
-git remote add bot ssh://visionr@dev2-bg.plan-vision.com:2299/wsh/
+git remote add bot ssh://visionr@dev2-bg.plan-vision.com:2299/home/visionr/wsh/
 for i in $(pgrep -f monitor); do kill $i; echo stopped $i; done 
 git pull bot HEAD
 rm /home/pi/wsh/js/external*.js
